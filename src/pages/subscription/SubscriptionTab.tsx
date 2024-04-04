@@ -16,7 +16,7 @@ export function SubscriptionTab() {
   async function subscribe(type: number) {
     setError(undefined);
     try {
-      const ref = 'iris-docs';
+      const ref = 'docs.iris.to';
       await new SnortApi().createSubscription(type, ref);
       listSubscriptions();
     } catch (e) {
