@@ -40,36 +40,38 @@ export function RenewSub({ sub }: { sub: Subscription }) {
 
   if (!sub) return;
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex gap-4 items-center">
-        <small className="text-xs">Months</small>
-        <form onSubmit={handleRenewSubmit} className="flex gap-2">
-          <input
-            disabled={!!invoice}
-            type="number"
-            className="input input-bordered w-full max-w-xs"
-            value={months}
-            onChange={handleMonthsChange}
-            min={1}
-          />
-          <button disabled={!!invoice} type="submit" className={buttonClass}>
-            {buttonText}
-          </button>
-        </form>
-      </div>
-
-      {plan && (
-        <div>
-          Price: <strong>{formatAmount(plan.price * months)} sats</strong>{' '}
-          <span className="text-sm">
-            <SatsToUsd sats={plan.price * months} />
-          </span>
+    <div className="card bg-primary bg-primary-content w-full shadow-xl">
+      <div className="flex flex-col gap-4 card-body">
+        <div className="flex gap-4 items-center">
+          <small className="text-xs">Months</small>
+          <form onSubmit={handleRenewSubmit} className="flex gap-2">
+            <input
+              disabled={!!invoice}
+              type="number"
+              className="input input-bordered w-full max-w-xs"
+              value={months}
+              onChange={handleMonthsChange}
+              min={1}
+            />
+            <button disabled={!!invoice} type="submit" className={buttonClass}>
+              {buttonText}
+            </button>
+          </form>
         </div>
-      )}
 
-      <div>
-        {invoice && <Invoice invoice={invoice} />}
-        {error && <strong className="text-red-500">{mapSubscriptionErrorCode(error)}</strong>}
+        {plan && (
+          <div>
+            Price: <strong>{formatAmount(plan.price * months)} sats</strong>{' '}
+            <span className="text-sm">
+              <SatsToUsd sats={plan.price * months} />
+            </span>
+          </div>
+        )}
+
+        <div>
+          {invoice && <Invoice invoice={invoice} />}
+          {error && <strong className="text-red-500">{mapSubscriptionErrorCode(error)}</strong>}
+        </div>
       </div>
     </div>
   );
