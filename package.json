@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@noble/hashes": "^1.4.0",
+    "@nostr-dev-kit/ndk": "^2.7.1",
     "@remixicon/react": "^4.2.0",
     "@tiptap/extension-collaboration": "^2.2.4",
     "@tiptap/extension-highlight": "^2.2.4",

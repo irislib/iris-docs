@@ -1,7 +1,7 @@
 import { hexToBytes } from '@noble/hashes/utils';
 import classNames from 'classnames';
 import { useLocalState } from 'irisdb-hooks';
-import { newUserLogin, privateKeyLogin } from 'irisdb-nostr';
+import {DEFAULT_RELAYS, newUserLogin, privateKeyLogin} from 'irisdb-nostr';
 import { nip19 } from 'nostr-tools';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
@@ -14,6 +14,7 @@ export default function LoginDialog() {
   const [, setNip07Login] = useLocalState('user/nip07Login', false);
   const [publicKey, setPublicKey] = useLocalState('user/publicKey', '');
   const [privateKey, setPrivateKey] = useLocalState('user/privateKey', '');
+  const [, setRelays] = useLocalState('user/relays', []);
   const [newUserName, setNewUserName] = useState('');
   const [inputPrivateKey, setInputPrivateKey] = useState('');
 
@@ -36,6 +37,7 @@ export default function LoginDialog() {
     if (!privateKey || confirm('Log out? Make sure you have a backup of your secret key.')) {
       setPublicKey('');
       setPrivateKey('');
+      setRelays(DEFAULT_RELAYS);
       setNip07Login(false);
     }
   }
