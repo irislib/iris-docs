@@ -22,7 +22,7 @@ export default function UserButton() {
     <>
       <Show when={!!pubKey}>
         <div className="rounded-full cursor-pointer" onClick={showModal}>
-          <Avatar pubKey={pubKey} />
+          <Avatar pubKey={pubKey} showBadge={false} />
         </div>
       </Show>
       <Show when={!pubKey}>
