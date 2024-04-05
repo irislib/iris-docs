@@ -1,5 +1,5 @@
+import { Network } from '@/pages/settings/Network.tsx';
 import { SubscriptionTab } from '@/pages/subscription/SubscriptionTab.tsx';
-import {Network} from "@/pages/settings/Network.tsx";
 
 export default function Settings() {
   return (

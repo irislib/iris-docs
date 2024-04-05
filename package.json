@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     "preview": "vite preview",
     "test": "vitest"
   },
@@ -26,6 +26,7 @@
     "@tiptap/starter-kit": "^2.2.4",
     "classnames": "^2.5.1",
     "debug": "^4.3.4",
+    "fuse.js": "^7.0.0",
     "irisdb": "^1.0.3",
     "irisdb-hooks": "^1.0.3",
     "irisdb-nostr": "^1.0.3",
