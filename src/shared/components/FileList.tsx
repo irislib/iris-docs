@@ -12,6 +12,7 @@ import { FormEvent, MouseEvent, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
+import { FollowButton } from '@/shared/components/FollowButton.tsx';
 import Show from '@/shared/components/Show';
 import { UpdatedAt } from '@/shared/components/UpdatedAt';
 import { Name } from '@/shared/components/user/Name';
@@ -159,7 +160,10 @@ export function FileList({ directory, baseUrl }: { directory: string; baseUrl: s
                   <h2 className="text-xl text-base-content">Files by followed users</h2>
                 </>
               ) : (
-                <UserRow pubKey={user!} />
+                <>
+                  <UserRow pubKey={user!} />
+                  <FollowButton pubKey={user!} />
+                </>
               )}
             </div>
             <span className="text-base-content">
