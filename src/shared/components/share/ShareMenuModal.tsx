@@ -1,4 +1,4 @@
-import { useLocalState } from 'irisdb-hooks';
+import { useAuthors, useLocalState } from 'irisdb-hooks';
 import { PublicKey } from 'irisdb-nostr';
 import { nip19 } from 'nostr-tools';
 import { RefObject, useMemo } from 'react';
@@ -25,6 +25,10 @@ export function ShareMenuModal({
     return new PublicKey(owner);
   }, [owner]);
   const fileName = useMemo(() => filePath.split('/').pop(), [filePath]);
+  const authors = useAuthors(
+    owner || 'public',
+    owner !== 'follows' ? `${filePath}/writers` : undefined,
+  );
 
   const isMine = useMemo(() => myPubKey === userPublicKey?.toString(), [myPubKey, userPublicKey]);
 
@@ -37,10 +41,15 @@ export function ShareMenuModal({
       <div className="modal-box flex flex-col gap-4">
         <h2 className="text-2xl">Share with others</h2>
         <Show when={isMine}>
-          <AddUserForm file={filePath} />
+          <AddUserForm file={filePath} authors={authors} />
         </Show>
         <h3 className="text-xl">People with write access</h3>
-        <WriteAccessUsers owner={owner || 'follows'} isMine={isMine} file={filePath} />
+        <WriteAccessUsers
+          authors={authors}
+          owner={owner || 'follows'}
+          isMine={isMine}
+          file={filePath}
+        />
         <h3 className="text-xl">
           Read access: <span className="text-primary">public</span>
         </h3>

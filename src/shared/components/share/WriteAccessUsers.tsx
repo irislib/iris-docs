@@ -1,6 +1,5 @@
 import { RiDeleteBinLine } from '@remixicon/react';
 import { useLocalState } from 'irisdb-hooks';
-import { useAuthors } from 'irisdb-hooks';
 import { PublicKey, publicState } from 'irisdb-nostr';
 import { nip19 } from 'nostr-tools';
 import { useMemo } from 'react';
@@ -15,14 +14,11 @@ type WriteAccessUsersProps = {
   owner: string;
   isMine: boolean;
   file: string;
+  authors: string[];
 };
 
-export const WriteAccessUsers = ({ owner, isMine, file }: WriteAccessUsersProps) => {
+export const WriteAccessUsers = ({ owner, isMine, file, authors }: WriteAccessUsersProps) => {
   const [myPubKey] = useLocalState('user/publicKey', '');
-  const authors = useAuthors(
-    owner || 'public',
-    owner !== 'follows' ? `${file}/writers` : undefined,
-  );
   const userHex = useMemo(
     () => (owner === 'follows' ? '' : new PublicKey(owner).toString()),
     [owner, myPubKey],
