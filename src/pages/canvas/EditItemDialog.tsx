@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 
 import { Item } from '@/pages/canvas/types.ts';
 
@@ -14,6 +14,7 @@ export function EditItemDialog({
   onSave: (key: string, item: Item | null) => void;
 }) {
   const [newData, setNewData] = useState(item?.data || '');
+  const ref = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -22,7 +23,22 @@ export function EditItemDialog({
       }
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+
+    // also close when clicking outside the dialog
+    const handleClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        onClose();
+      }
+    };
+    const timeoutId = setTimeout(() => {
+      window.addEventListener('click', handleClick);
+    }, 0);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('click', handleClick);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   if (!item) return null;
@@ -39,7 +55,7 @@ export function EditItemDialog({
   };
 
   return (
-    <form className="flex flex-row gap-2" onSubmit={onSubmit}>
+    <form className="flex flex-row gap-2" onSubmit={onSubmit} ref={ref}>
       <input
         type="text"
         className="input input-primary"

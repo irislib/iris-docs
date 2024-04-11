@@ -22,6 +22,8 @@ const getUrl = (url: string) => {
   }
 };
 
+// TODO freehand draw using perfect-freehand
+
 export default function Canvas() {
   const [showNewItemDialog, setShowNewItemDialog] = useState(false);
   const [editingItem, setEditingItem] = useState<string | null>(null);
