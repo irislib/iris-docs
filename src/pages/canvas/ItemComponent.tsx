@@ -6,12 +6,13 @@ type ItemComponentProps = {
   item: Item;
   onMove: (mouseX: number, mouseY: number) => void;
   editable: boolean;
+  onClick?: () => void;
 };
 
 const IMG_REGEX = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i;
 const VIDEO_REGEX = /\.(mp4|webm|ogg|mov)$/i;
 
-export function ItemComponent({ item, onMove, editable }: ItemComponentProps) {
+export function ItemComponent({ item, onMove, editable, onClick }: ItemComponentProps) {
   const [isDragging, setIsDragging] = useState(false);
   const url = useMemo(() => {
     try {
@@ -77,6 +78,7 @@ export function ItemComponent({ item, onMove, editable }: ItemComponentProps) {
       className={`absolute -translate-x-1/2 -translate-y-1/2 select-none ${editable && 'cursor-move'}`}
       style={{ left: item.x, top: item.y }}
       onMouseDown={onMouseDown}
+      onClick={onClick}
     >
       {content}
     </div>

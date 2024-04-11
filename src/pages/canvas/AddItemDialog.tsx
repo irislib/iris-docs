@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { uploadFile } from '@/shared/upload';
 
@@ -10,6 +10,16 @@ type AddItemDialogProps = {
 export function AddItemDialog({ addItem, onClose }: AddItemDialogProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [newItemValue, setNewItemValue] = useState('');
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const onFileChange = async () => {
     if (fileInputRef.current?.files?.length) {

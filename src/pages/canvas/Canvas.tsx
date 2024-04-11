@@ -14,6 +14,7 @@ import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AddItemDialog } from '@/pages/canvas/AddItemDialog';
+import { EditItemDialog } from '@/pages/canvas/EditItemDialog.tsx';
 import { ItemComponent } from '@/pages/canvas/ItemComponent';
 import { Item } from '@/pages/canvas/types';
 import Show from '@/shared/components/Show';
@@ -30,6 +31,7 @@ const getUrl = (url: string) => {
 
 export default function Canvas() {
   const [showNewItemDialog, setShowNewItemDialog] = useState(false);
+  const [editingItem, setEditingItem] = useState<string | null>(null);
   const [myPubKey] = useLocalState('user/publicKey', '');
   const [items, setItems] = useState(new Map<string, Item>());
   const [movingInterval, setMovingInterval] = useState<number | null>(null);
@@ -106,6 +108,14 @@ export default function Canvas() {
     const unsubscribe = doc.get('items').forEach((value, key) => {
       if (typeof key !== 'string') return;
       const id = key.split('/').pop()!;
+      if (!value) {
+        setItems((prev) => {
+          const newItems = new Map(prev);
+          newItems.delete(id);
+          return newItems;
+        });
+        return;
+      }
       try {
         const obj = JSON.parse(value as string);
         // check it has the correct fields
@@ -135,6 +145,12 @@ export default function Canvas() {
     const id = uuidv4();
     const value = JSON.stringify(item);
     publicState(myPubKey).get(docName).get('items').get(id).put(value);
+  }
+
+  function editItem(key: string, item: Item | null) {
+    if (!editable) return;
+    const value = item === null ? null : JSON.stringify(item);
+    publicState(myPubKey).get(docName).get('items').get(key).put(value);
   }
 
   const handleDragOver: DragEventHandler<HTMLDivElement> = (e) => {
@@ -240,7 +256,15 @@ export default function Canvas() {
                 }}
               />
             </Show>
-            <Show when={!showNewItemDialog}>
+            {editingItem && (
+              <EditItemDialog
+                name={editingItem}
+                item={items.get(editingItem!)}
+                onClose={() => setEditingItem(null)}
+                onSave={editItem}
+              />
+            )}
+            <Show when={!showNewItemDialog && !editingItem}>
               <button
                 className="btn btn-primary btn-circle bg-primary"
                 onClick={() => setShowNewItemDialog(true)}
@@ -262,6 +286,7 @@ export default function Canvas() {
               key={key}
               item={item}
               onMove={(mouseX, mouseY) => moveItem(key, mouseX, mouseY)}
+              onClick={() => setEditingItem(key)}
             />
           ))}
         </div>

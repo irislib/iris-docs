@@ -13,6 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import { FollowButton } from '@/shared/components/FollowButton.tsx';
+import NodeValue from '@/shared/components/NodeValue.tsx';
 import Show from '@/shared/components/Show';
 import { UpdatedAt } from '@/shared/components/UpdatedAt';
 import { Name } from '@/shared/components/user/Name';
@@ -113,6 +114,14 @@ export function FileList({ directory, baseUrl }: { directory: string; baseUrl: s
     }
   };
 
+  function FileName({ file, path }: { file: FileListItem; path: string }) {
+    if (!file.name && file.owner && file.ownerNpub && file.ownerNpub !== user) {
+      console.log('file', file, 'user', user, 'path', path);
+      return <NodeValue authors={[file.owner]} path={`${path.slice(1)}/name`} editable={false} />;
+    }
+    return file.name || 'Untitled';
+  }
+
   return (
     <div className="flex flex-col gap-2 p-4 container max-w-4xl mx-auto">
       <Show when={!isMine && !!myPubKey}>
@@ -189,7 +198,9 @@ export function FileList({ directory, baseUrl }: { directory: string; baseUrl: s
                 key={path}
                 className="p-2 border-b border-base-content/10 hover:bg-base-content/10 hover:rounded-md hover:border-b-transparent justify-between flex items-center gap-4"
               >
-                <div className="flex-1 font-bold">{file.name || 'Untitled'}</div>
+                <div className="flex-1 font-bold">
+                  <FileName file={file} path={path} />
+                </div>
                 {file.owner && (
                   <Link
                     to={`${baseUrl}/?user=${file.owner}`}

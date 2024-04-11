@@ -63,7 +63,12 @@ export const WriteAccessUsers = ({ owner, isMine, file, authors }: WriteAccessUs
         .map((pubKey) => (
           <div className="flex flex-row gap-2 items-center" key={pubKey}>
             <div className="flex-1">
-              <Link to={{ pathname: `/${basePath}}`, search: `?user=${pubKey}` }}>
+              <Link
+                to={{
+                  pathname: basePath,
+                  search: `?user=${new PublicKey(pubKey).toBech32('npub')}`,
+                }}
+              >
                 <UserRow pubKey={pubKey} description="Write access" />
               </Link>
             </div>
