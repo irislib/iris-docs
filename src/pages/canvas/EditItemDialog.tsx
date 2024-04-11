@@ -49,7 +49,7 @@ export function EditItemDialog({
       <button className="btn btn-primary bg-primary" type="submit">
         Save
       </button>
-      <button className="btn btn-outline" type="button" onClick={onDelete}>
+      <button className="btn btn-error btn-outline" type="button" onClick={onDelete}>
         Delete
       </button>
       <button className="btn btn-outline" type="button" onClick={onClose}>

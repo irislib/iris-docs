@@ -2,14 +2,7 @@ import { RiAddLine } from '@remixicon/react';
 import { useAuthors, useLocalState } from 'irisdb-hooks';
 import { PublicKey, publicState } from 'irisdb-nostr';
 import { throttle } from 'lodash';
-import {
-  DragEventHandler,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  WheelEventHandler,
-} from 'react';
+import { DragEventHandler, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -48,6 +41,7 @@ export default function Canvas() {
     owner !== 'follows' ? `${docName}/writers` : undefined,
   );
   const editable = authors.includes(myPubKey);
+  const ref = useRef<HTMLDivElement>(null);
 
   const moveCanvas = (direction: string) => {
     const moveAmount = 10; // Adjust the movement speed as necessary
@@ -223,13 +217,14 @@ export default function Canvas() {
     });
   };
 
-  const handleWheel: WheelEventHandler<HTMLDivElement> = (e) => {
+  const handleWheel = (e: WheelEvent) => {
     const zoomSpeed = 0.1; // Determines how fast to zoom in or out
     if (e.ctrlKey || e.metaKey) {
       e.preventDefault();
       e.stopPropagation();
-      const newScale = e.deltaY > 0 ? scale * (1 - zoomSpeed) : scale * (1 + zoomSpeed);
-      setScale(newScale);
+      setScale((prevScale) =>
+        e.deltaY > 0 ? prevScale * (1 - zoomSpeed) : prevScale * (1 + zoomSpeed),
+      );
     } else {
       setCanvasPosition((currentPosition) => ({
         x: currentPosition.x - e.deltaX,
@@ -238,12 +233,21 @@ export default function Canvas() {
     }
   };
 
+  useEffect(() => {
+    // react onWheel listener is passive, but we need non-passive to preventDefault
+    ref.current?.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      ref.current?.removeEventListener('wheel', handleWheel);
+    };
+  }, [ref]);
+
   return (
     <div className="flex flex-col">
       <div
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        onWheel={handleWheel}
+        ref={ref}
         className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden bg-base-100"
       >
         <Show when={!!myPubKey}>
