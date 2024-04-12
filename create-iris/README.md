@@ -1,13 +1,13 @@
-# New Iridian project
+# New Iris project
 
-Iridian is a template to get started quickly with IrisDB & Nostr web application development.
+This is a template to get started quickly with IrisDB & Nostr web application development.
 
 It has basic building blocks like app routing, navigation, authentication, network settings, social networking and
 [IrisDB](https://github.com/irislib/irisdb) usage examples.
 
 ## Project setup
 ```
-npm create iridian@latest
+npm create iris@latest
 npm install
 npm run dev
 ```

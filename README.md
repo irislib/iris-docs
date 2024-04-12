@@ -14,11 +14,14 @@ For text document sync, we use https://github.com/yjs/yjs
 
 Deployed on [docs.iris.to](https://docs.iris.to/)
 
-## Iridian
-This project is also a template for Iridian: a tool for quickly getting started with IrisDB & Nostr web application development.
+## create-iris
+This project is also a template for quickly getting started with [IrisDB](https://github.com/irislib/irisdb) & [Nostr](https://nostr.com) web application development.
+
+It has basic building blocks like app routing, navigation, authentication, network settings, social networking and
+IrisDB usage examples.
 
 ```
-npm create iridian@latest
+npm create iris@latest
 ```
 
 ## Stack
@@ -30,6 +33,7 @@ npm create iridian@latest
 * [NDK](https://github.com/nostr-dev-kit/ndk) for syncing data over [Nostr](https://nostr.com)
 * [yjs](https://github.com/yjs/yjs) for collaborative text documents
 * [TipTap](https://github.com/ueberdosis/tiptap) for collaborative rich text documents
+* [Remix Icon](https://remixicon.com/) for icons
 
 ## Development
 ```sh

@@ -10,9 +10,9 @@ import config from './config.json' assert { type: 'json' };
 
 const cwd = process.cwd();
 
-const defaultName = 'iridian-project';
+const defaultName = 'iris-project';
 
-const excludedFiles = ['create-iridian', 'node_modules', '.git'];
+const excludedFiles = ['create-iris', 'node_modules', '.git', 'package-lock.json'];
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url)); // Directory of the script
 

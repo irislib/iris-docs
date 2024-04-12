@@ -1,7 +1,7 @@
 {
-  "name": "create-iridian",
+  "name": "create-iris",
   "private": false,
-  "version": "1.0.2",
+  "version": "1.0.0",
   "type": "module",
   "engine": "node >=18.0.0",
   "repository": {
@@ -19,7 +19,7 @@
     "test": "vitest"
   },
   "bin": {
-    "create-iridian": "create-iridian/create-iridian.js"
+    "create-iris": "create-iris/create-iris.js"
   },
   "dependencies": {
     "@noble/hashes": "^1.4.0",
