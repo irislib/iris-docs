@@ -10,6 +10,7 @@ import { useLocalState } from 'irisdb-hooks';
 import { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import config from '@/config.json';
 import Show from '@/shared/components/Show.tsx';
 
 export const NavSideBar = ({
@@ -59,8 +60,8 @@ export const NavSideBar = ({
       } transition-transform duration-200 ease-in-out flex flex-col`}
     >
       <Link className="mx-6 m-4 text-2xl flex items-center gap-2" to="/">
-        <img src="/android-chrome-192x192.png" alt="Iris Docs" className="w-8 h-8" />
-        Iris Docs
+        <img src="/android-chrome-192x192.png" alt={config.appTitle} className="w-8 h-8" />
+        {config.appTitle}
       </Link>
       <hr className="border-base-300" />
       <ul className="menu w-full rounded-box">

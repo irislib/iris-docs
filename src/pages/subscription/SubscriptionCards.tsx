@@ -29,7 +29,7 @@ const PlanFeatures = ({ planId }: { planId: SubscriptionType }) => {
   const features = {
     [SubscriptionType.Supporter]: (
       <ul className="list-disc pl-5 h-full text-sm">
-        <li>Write access to Snort relay, with 1 year of data retention</li>
+        <li>Write access to relay.snort.social, with 1 year of data retention</li>
         <li>
           Iris.to:
           <ul className="list-disc pl-5">
@@ -42,7 +42,7 @@ const PlanFeatures = ({ planId }: { planId: SubscriptionType }) => {
     ),
     [SubscriptionType.Premium]: (
       <ul className="list-disc pl-5 h-full text-sm">
-        <li>Unlimited data retention on Snort relay</li>
+        <li>Unlimited data retention on relay.snort.social</li>
         <li>
           Iris.to:
           <ul className="list-disc pl-5">
