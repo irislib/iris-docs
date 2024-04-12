@@ -1,9 +1,16 @@
 {
   "name": "create-iridian",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "engine": "node >=18.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irislib/iris-docs.git"
+  },
+  "description": "Tool for creating IrisDB projects",
+  "author": "Martti Malmi",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

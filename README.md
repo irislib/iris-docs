@@ -14,6 +14,13 @@ For text document sync, we use https://github.com/yjs/yjs
 
 Deployed on [docs.iris.to](https://docs.iris.to/)
 
+## Iridian
+This project is also a template for Iridian: a tool for quickly getting started with IrisDB & Nostr web application development.
+
+```
+npm create iridian@latest
+```
+
 ## Stack
 * Vite
 * React

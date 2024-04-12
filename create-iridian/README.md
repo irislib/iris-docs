@@ -7,7 +7,7 @@ It has basic building blocks like app routing, navigation, authentication, netwo
 
 ## Project setup
 ```
-npm create iridian
+npm create iridian@latest
 npm install
 npm run dev
 ```
