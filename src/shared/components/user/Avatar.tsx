@@ -26,6 +26,9 @@ export const Avatar = ({
   useEffect(() => {
     setImage('');
     const fetchImage = async () => {
+      if (!pubKeyHex) {
+        return;
+      }
       const user = ndk().getUser({ pubkey: pubKeyHex });
       const profile = await user.fetchProfile();
       if (profile && profile.image) {

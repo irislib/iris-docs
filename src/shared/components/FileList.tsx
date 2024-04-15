@@ -83,7 +83,7 @@ export function FileList({ directory, baseUrl }: { directory: string; baseUrl: s
               ownerNpub,
               updatedAt,
             };
-            return new Map(files.set(path, item));
+            return new Map(files.set(path.split('/').slice(1).join('/'), item));
           });
         }
         if (value === null) {
@@ -116,8 +116,7 @@ export function FileList({ directory, baseUrl }: { directory: string; baseUrl: s
 
   function FileName({ file, path }: { file: FileListItem; path: string }) {
     if (!file.name && file.owner && file.ownerNpub && file.ownerNpub !== user) {
-      console.log('file', file, 'user', user, 'path', path);
-      return <NodeValue authors={[file.owner]} path={`${path.slice(1)}/name`} editable={false} />;
+      return <NodeValue authors={[file.owner]} path={`${path}/name`} editable={false} />;
     }
     return file.name || 'Untitled';
   }
