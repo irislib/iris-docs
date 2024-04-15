@@ -17,9 +17,8 @@ export function ViewingUsers({ file, authors }: ViewingUsersProps) {
     const node = publicState(authors).get(file).get('viewing');
 
     return node.forEach((isViewing, nodePath, updatedAt) => {
-      // TODO we need a way to verify who wrote the value. return nostr event in the callback?
       if (typeof nodePath !== 'string' || !updatedAt) return;
-      const user = nodePath.split('/').pop()!;
+      const user = nodePath.split('/')[0];
       if (!user) return;
       if (user === myPubKey) return;
       const existing = viewingUsers.get(user);
