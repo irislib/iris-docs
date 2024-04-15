@@ -27,9 +27,9 @@ npm create iris@latest
 ## Stack
 * Vite
 * React
+* [IrisDB](../README.md)
 * [Tailwind](https://tailwindcss.com/docs/installation)
 * [DaisyUI](https://daisyui.com/)
-* [IrisDB](../README.md)
 * [NDK](https://github.com/nostr-dev-kit/ndk) for syncing data over [Nostr](https://nostr.com)
 * [yjs](https://github.com/yjs/yjs) for collaborative text documents
 * [TipTap](https://github.com/ueberdosis/tiptap) for collaborative rich text documents

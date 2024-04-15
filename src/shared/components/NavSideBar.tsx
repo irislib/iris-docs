@@ -2,6 +2,7 @@ import {
   RiBrushLine,
   RiFileLine,
   RiFolderOpenLine,
+  RiHomeLine,
   RiInformationLine,
   RiSettings3Line,
   RiVipCrownLine,
@@ -65,18 +66,29 @@ export const NavSideBar = ({
       </Link>
       <hr className="border-base-300" />
       <ul className="menu w-full rounded-box">
-        <li>
-          <Link to="/">
-            <RiFileLine className="w-5 h-5" />
-            Docs
-          </Link>
-        </li>
-        <li>
-          <Link to="/canvas">
-            <RiBrushLine className="w-5 h-5" />
-            Canvas
-          </Link>
-        </li>
+        {config.isCreateIris ? (
+          <li>
+            <Link to="/">
+              <RiHomeLine className="w-5 h-5" />
+              Home
+            </Link>
+          </li>
+        ) : (
+          <>
+            <li>
+              <Link to="/">
+                <RiFileLine className="w-5 h-5" />
+                Docs
+              </Link>
+            </li>
+            <li>
+              <Link to="/canvas">
+                <RiBrushLine className="w-5 h-5" />
+                Canvas
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
       <hr className="border-base-300" />
       <ul className="menu w-full rounded-box">
@@ -92,12 +104,14 @@ export const NavSideBar = ({
             Explorer
           </Link>
         </li>
-        <li>
-          <Link to="/document/iris-docs-about?owner=npub1g53mukxnjkcmr94fhryzkqutdz2ukq4ks0gvy5af25rgmwsl4ngq43drvk">
-            <RiInformationLine className="w-5 h-5" />
-            About
-          </Link>
-        </li>
+        {!config.isCreateIris && (
+          <li>
+            <Link to="/document/iris-docs-about?owner=npub1g53mukxnjkcmr94fhryzkqutdz2ukq4ks0gvy5af25rgmwsl4ngq43drvk">
+              <RiInformationLine className="w-5 h-5" />
+              About
+            </Link>
+          </li>
+        )}
       </ul>
       <hr className="border-base-300" />
       <Show when={isLoggedIn}>

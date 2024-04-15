@@ -14,8 +14,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { FollowButton } from '@/shared/components/FollowButton.tsx';
 import NodeValue from '@/shared/components/NodeValue.tsx';
+import { RelativeTime } from '@/shared/components/RelativeTime.tsx';
 import Show from '@/shared/components/Show';
-import { UpdatedAt } from '@/shared/components/UpdatedAt';
 import { Name } from '@/shared/components/user/Name';
 import { UserRow } from '@/shared/components/user/UserRow';
 import useSearchParam from '@/shared/hooks/useSearchParam';
@@ -213,7 +213,7 @@ export function FileList({ directory, baseUrl }: { directory: string; baseUrl: s
                 )}
                 {file.updatedAt && (
                   <span className="text-base-content">
-                    <UpdatedAt updatedAt={file.updatedAt} />
+                    <RelativeTime time={file.updatedAt} />
                   </span>
                 )}
                 <Show when={isMine}>

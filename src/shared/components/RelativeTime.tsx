@@ -1,6 +1,6 @@
-export function UpdatedAt({ updatedAt }: { updatedAt: number }) {
+export function RelativeTime({ time }: { time: number }) {
   // return short time (hours and minutes) for current day or date for previous days
-  const date = new Date(updatedAt);
+  const date = new Date(time);
   const now = new Date();
   const isToday =
     date.getDate() === now.getDate() &&

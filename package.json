@@ -1,7 +1,7 @@
 {
   "name": "create-iris",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "engine": "node >=18.0.0",
   "repository": {
