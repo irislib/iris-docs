@@ -2,7 +2,7 @@ import { RiDeleteBinLine, RiEmojiStickerLine } from '@remixicon/react';
 import EmojiPicker, { Theme } from 'emoji-picker-react';
 import { usePublicState } from 'irisdb-hooks';
 import { publicState } from 'irisdb-nostr';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ChatMessage } from '@/shared/components/chat/Chat.tsx';
 import { RelativeTime } from '@/shared/components/RelativeTime.tsx';
@@ -26,6 +26,17 @@ export function MessageComponent({
     '',
   );
 
+  useEffect(() => {
+    // if showEmojiPicker is true, add handler to close on esc
+    if (showEmojiPicker) {
+      const escHandler = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') setShowEmojiPicker(false);
+      };
+      window.addEventListener('keydown', escHandler);
+      return () => window.removeEventListener('keydown', escHandler);
+    }
+  }, [showEmojiPicker]);
+
   function onDelete() {
     const truncated = msg.content.length > 20 ? msg.content.slice(0, 20) + '...' : msg.content;
     if (confirm(`Delete message "${truncated}"?`)) {
@@ -42,7 +53,7 @@ export function MessageComponent({
         <div className="text-sm font-bold">
           <UserRow pubKey={msg.author} />
         </div>
-        <div className="text-xs flex flex-row items-center gap-2">
+        <div className="text-xs flex flex-row items-center gap-4">
           <span className="cursor-pointer" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
             <RiEmojiStickerLine className="w-4 h-4" />
           </span>
@@ -65,13 +76,16 @@ export function MessageComponent({
       {showEmojiPicker && (
         <dialog id="my_modal_3" className="modal modal-open">
           <div className="modal-box flex flex-col gap-4 items-center justify-center">
-            <EmojiPicker
-              theme={Theme.AUTO}
-              onEmojiClick={(e) => {
-                setMyReaction(e.emoji);
-                setShowEmojiPicker(false);
-              }}
-            />
+            {myPubKey && (
+              <EmojiPicker
+                reactionsDefaultOpen={true}
+                theme={Theme.AUTO}
+                onEmojiClick={(e) => {
+                  setMyReaction(e.emoji);
+                  setShowEmojiPicker(false);
+                }}
+              />
+            )}
             {myReaction && (
               <div className="flex flex-1 w-full flex-row gap-4 justify-between items-center">
                 <div className="flex flex-row gap-4 items-center">
@@ -82,7 +96,7 @@ export function MessageComponent({
                   className="btn btn-neutral cursor-pointer"
                   onClick={() => setMyReaction('')}
                 >
-                  Remove
+                  <RiDeleteBinLine className="w-4 h-4" />
                 </button>
               </div>
             )}
