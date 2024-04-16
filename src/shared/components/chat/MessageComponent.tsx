@@ -1,5 +1,8 @@
-import { RiDeleteBinLine } from '@remixicon/react';
+import { RiDeleteBinLine, RiEmojiStickerLine } from '@remixicon/react';
+import EmojiPicker, { Theme } from 'emoji-picker-react';
+import { usePublicState } from 'irisdb-hooks';
 import { publicState } from 'irisdb-nostr';
+import { useState } from 'react';
 
 import { ChatMessage } from '@/shared/components/chat/Chat.tsx';
 import { RelativeTime } from '@/shared/components/RelativeTime.tsx';
@@ -8,13 +11,20 @@ import { UserRow } from '@/shared/components/user/UserRow.tsx';
 export function MessageComponent({
   msg,
   path,
-  isMine,
+  myPubKey,
 }: {
   msg: ChatMessage;
   path: string;
-  isMine: boolean;
+  myPubKey: string;
 }) {
   console.log('msg', path);
+  const isMine = msg.author === myPubKey;
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [myReaction, setMyReaction] = usePublicState(
+    [myPubKey],
+    `apps/chat/reactions/${encodeURIComponent(path)}`,
+    '',
+  );
 
   function onDelete() {
     const truncated = msg.content.length > 20 ? msg.content.slice(0, 20) + '...' : msg.content;
@@ -33,6 +43,9 @@ export function MessageComponent({
           <UserRow pubKey={msg.author} />
         </div>
         <div className="text-xs flex flex-row items-center gap-2">
+          <span className="cursor-pointer" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+            <RiEmojiStickerLine className="w-4 h-4" />
+          </span>
           {isMine && (
             <span className="cursor-pointer" onClick={onDelete}>
               <RiDeleteBinLine className="w-4 h-4" />
@@ -41,8 +54,44 @@ export function MessageComponent({
           <RelativeTime time={msg.time} />
         </div>
       </div>
-      <div className="hidden" onClick={onDelete}></div>
       <div className="text-sm">{msg.content}</div>
+      {myReaction && (
+        <div className="flex flex-row items-center justify-end">
+          <span className="cursor-pointer" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+            {myReaction}
+          </span>
+        </div>
+      )}
+      {showEmojiPicker && (
+        <dialog id="my_modal_3" className="modal modal-open">
+          <div className="modal-box flex flex-col gap-4 items-center justify-center">
+            <EmojiPicker
+              theme={Theme.AUTO}
+              onEmojiClick={(e) => {
+                setMyReaction(e.emoji);
+                setShowEmojiPicker(false);
+              }}
+            />
+            {myReaction && (
+              <div className="flex flex-1 w-full flex-row gap-4 justify-between items-center">
+                <div className="flex flex-row gap-4 items-center">
+                  <span className="text-2xl">{myReaction}</span>
+                  <UserRow pubKey={myPubKey} />
+                </div>
+                <button
+                  className="btn btn-neutral cursor-pointer"
+                  onClick={() => setMyReaction('')}
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button onClick={() => setShowEmojiPicker(false)}>close</button>
+          </form>
+        </dialog>
+      )}
     </div>
   );
 }

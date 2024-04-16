@@ -68,12 +68,7 @@ export default function Chat({ path }: { path: string }) {
         {Array.from(messages.entries())
           .sort((a, b) => b[1].time - a[1].time)
           .map((msg) => (
-            <MessageComponent
-              key={msg[0]}
-              path={msg[0]}
-              msg={msg[1]}
-              isMine={msg[1].author === myNpub}
-            />
+            <MessageComponent key={msg[0]} path={msg[0]} msg={msg[1]} myPubKey={myNpub} />
           ))}
       </div>
     </div>
