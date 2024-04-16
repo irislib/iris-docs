@@ -1,5 +1,5 @@
 import config from '@/config.json';
-import Chat from '@/shared/components/Chat.tsx';
+import Chat from '@/shared/components/chat/Chat.tsx';
 
 export default function () {
   return (
@@ -11,6 +11,9 @@ export default function () {
       <p>
         Edit this page at <code>src/pages/create-iris/index.tsx</code> or the router at{' '}
         <code>src/pages/index.tsx</code>.
+      </p>
+      <p>
+        Navigation sidebar: <code>src/shared/components/NavSideBar.tsx</code>
       </p>
       <p>Reference:</p>
       <ul className="list-disc">
@@ -90,7 +93,7 @@ export default function () {
       <p>
         Shows messages by you and your followed users. <code>src/shared/components/Chat.tsx</code>
       </p>
-      <Chat path="apps/chat/create-iris/messages" />
+      <Chat path="apps/chat/chats/create-iris/messages" />
     </div>
   );
 }

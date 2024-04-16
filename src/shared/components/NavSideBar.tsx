@@ -1,5 +1,6 @@
 import {
   RiBrushLine,
+  RiChat3Line,
   RiFileLine,
   RiFolderOpenLine,
   RiHomeLine,
@@ -89,6 +90,12 @@ export const NavSideBar = ({
             </li>
           </>
         )}
+        <li>
+          <Link to="/chat">
+            <RiChat3Line className="w-5 h-5" />
+            Chat
+          </Link>
+        </li>
       </ul>
       <hr className="border-base-300" />
       <ul className="menu w-full rounded-box">

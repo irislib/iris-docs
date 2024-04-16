@@ -1,50 +1,39 @@
 import { useAuthors, useLocalState } from 'irisdb-hooks';
 import { publicState } from 'irisdb-nostr';
-import { useEffect, useState } from 'react';
+import { nip19 } from 'nostr-tools';
+import { useEffect, useMemo, useState } from 'react';
 
-import { RelativeTime } from '@/shared/components/RelativeTime.tsx';
-import { UserRow } from '@/shared/components/user/UserRow.tsx';
+import { MessageComponent } from '@/shared/components/chat/MessageComponent.tsx';
 
-type Message = {
+export type ChatMessage = {
   author: string;
   time: number;
   content: string;
 };
 
-function MessageComponent({ msg, key }: { msg: Message; key: string }) {
-  function onDelete() {
-    publicState([]).get(key).put(null);
-  }
-
-  return (
-    <div className="flex flex-col mb-4 p-2 bg-neutral rounded-md">
-      <div className="flex items-start justify-between">
-        <div className="text-sm font-bold">
-          <UserRow pubKey={msg.author} />
-        </div>
-        <div className="text-xs">
-          <RelativeTime time={msg.time} />
-        </div>
-      </div>
-      <div className="hidden" onClick={onDelete}></div>
-      <div className="text-sm">{msg.content}</div>
-    </div>
-  );
-}
-
 export default function Chat({ path }: { path: string }) {
   const [myPubKey] = useLocalState('user/publicKey', '');
-  const [messages, setMessages] = useState<Map<string, Message>>(new Map());
+  const [messages, setMessages] = useState<Map<string, ChatMessage>>(new Map());
   const [newMessage, setNewMessage] = useState('');
+  const myNpub = useMemo(() => (myPubKey ? nip19.npubEncode(myPubKey) : ''), [myPubKey]);
 
   const authors = useAuthors('follows');
 
   useEffect(() => {
     if (!myPubKey) return;
+    setMessages(new Map());
     return publicState(authors)
       .get(path)
       .forEach((msg, key, updatedAt) => {
         if (!updatedAt) return;
+        if (!msg) {
+          setMessages((prev) => {
+            const next = new Map(prev);
+            next.delete(key);
+            return next;
+          });
+          return;
+        }
         const author = key.split('/')[0];
         const content = String(msg);
         console.log('key', key, 'msg', msg);
@@ -59,7 +48,7 @@ export default function Chat({ path }: { path: string }) {
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!newMessage) return;
-    publicState(authors).get(`${path}/${Date.now()}`).put(newMessage);
+    publicState(authors).get(`${path}/${new Date().toISOString()}`).put(newMessage);
     setNewMessage('');
   }
 
@@ -79,7 +68,12 @@ export default function Chat({ path }: { path: string }) {
         {Array.from(messages.entries())
           .sort((a, b) => b[1].time - a[1].time)
           .map((msg) => (
-            <MessageComponent key={msg[0]} msg={msg[1]} />
+            <MessageComponent
+              key={msg[0]}
+              path={msg[0]}
+              msg={msg[1]}
+              isMine={msg[1].author === myNpub}
+            />
           ))}
       </div>
     </div>

@@ -2,6 +2,7 @@ import { createBrowserRouter, createRoutesFromElements, Route } from 'react-rout
 
 import config from '@/config.json';
 import CanvasPage from '@/pages/canvas';
+import ChatPage from '@/pages/chat';
 import CreateIris from '@/pages/create-iris';
 import DocsPage from '@/pages/document';
 import Explorer from '@/pages/explorer/Explorer';
@@ -16,6 +17,7 @@ export const router = createBrowserRouter(
       <Route path="/explorer/:file?" element={<Explorer />} />
       <Route path="/canvas/:file?" element={<CanvasPage />} />
       <Route path="/document/:file?" element={<DocsPage />} />
+      <Route path="/chat/:id?" element={<ChatPage />} />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="/subscribe" element={<Subscribe />} />
       <Route path="/create-iris" element={<CreateIris />} />
