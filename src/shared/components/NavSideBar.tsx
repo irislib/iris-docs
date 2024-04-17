@@ -68,28 +68,34 @@ export const NavSideBar = ({
       <hr className="border-base-300" />
       <ul className="menu w-full rounded-box">
         {config.isCreateIris ? (
-          <li>
-            <Link to="/">
-              <RiHomeLine className="w-5 h-5" />
-              Home
-            </Link>
-          </li>
-        ) : (
           <>
             <li>
               <Link to="/">
+                <RiHomeLine className="w-5 h-5" />
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/document">
                 <RiFileLine className="w-5 h-5" />
                 Docs
               </Link>
             </li>
-            <li>
-              <Link to="/canvas">
-                <RiBrushLine className="w-5 h-5" />
-                Canvas
-              </Link>
-            </li>
           </>
+        ) : (
+          <li>
+            <Link to="/">
+              <RiFileLine className="w-5 h-5" />
+              Docs
+            </Link>
+          </li>
         )}
+        <li>
+          <Link to="/canvas">
+            <RiBrushLine className="w-5 h-5" />
+            Canvas
+          </Link>
+        </li>
         <li>
           <Link to="/chat">
             <RiChat3Line className="w-5 h-5" />

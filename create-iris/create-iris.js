@@ -10,7 +10,7 @@ import config from './config.json' assert { type: 'json' };
 
 const cwd = process.cwd();
 
-const defaultName = 'iris-project';
+const defaultName = 'my-iris-app';
 
 const excludedFiles = ['create-iris', 'node_modules', '.git', 'package-lock.json'];
 

@@ -8,6 +8,7 @@ It has basic building blocks like app routing, navigation, authentication, netwo
 ## Project setup
 ```
 npm create iris@latest
+cd my-iris-app
 npm install
 npm run dev
 ```

@@ -7,15 +7,28 @@ export default function () {
       <h1>
         Welcome to <code>{config.appTitle}</code>
       </h1>
-      <p>This is the starting point for your Iris application. Decentralize everything!</p>
       <p>
-        Edit this page at <code>src/pages/create-iris/index.tsx</code> or the router at{' '}
-        <code>src/pages/index.tsx</code>.
+        This template is a foundation for your Iris application, providing some essential features
+        and configurations to get started quickly. Decentralize everything!
       </p>
       <p>
-        Navigation sidebar: <code>src/shared/components/NavSideBar.tsx</code>
+        In the navigation menu you can find some example Iris apps. You can use them as a template
+        or remove them.
       </p>
-      <p>Reference:</p>
+      <p>Files to edit:</p>
+      <ul className="list-disc">
+        <li>
+          This page: <code>src/pages/create-iris/index.tsx</code>
+        </li>
+        <li>
+          Navigation sidebar: <code>src/shared/components/NavSideBar.tsx</code>
+        </li>
+        <li>
+          Router:
+          <code>src/pages/index.tsx</code>
+        </li>
+      </ul>
+      <p>Reference of included libraries:</p>
       <ul className="list-disc">
         <li>
           <a href="https://irisdb.iris.to" target="_blank" rel="noopener noreferrer">
@@ -89,9 +102,22 @@ export default function () {
           : web application framework
         </li>
       </ul>
+      <p>
+        <a
+          href="https://github.com/irislib/iris-docs"
+          target="_blank"
+          rel="noopener noreferrer"
+          >
+          GitHub
+        </a>
+      </p>
       <h2>Simple chat example</h2>
       <p>
-        Shows messages by you and your followed users. <code>src/shared/components/Chat.tsx</code>
+        Shows messages by you and your followed users.{' '}
+        <code>src/shared/components/chat/Chat.tsx</code>
+      </p>
+      <p>
+        <h3>#create-iris</h3>
       </p>
       <Chat path="apps/chat/chats/create-iris/messages" />
     </div>
