@@ -103,11 +103,7 @@ export default function () {
         </li>
       </ul>
       <p>
-        <a
-          href="https://github.com/irislib/iris-docs"
-          target="_blank"
-          rel="noopener noreferrer"
-          >
+        <a href="https://github.com/irislib/iris-docs" target="_blank" rel="noopener noreferrer">
           GitHub
         </a>
       </p>

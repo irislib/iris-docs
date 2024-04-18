@@ -1,7 +1,12 @@
 import { localState } from 'irisdb';
-import { useLocalState } from 'irisdb-hooks';
+import { useAuthors, useLocalState } from 'irisdb-hooks';
 import { publicState } from 'irisdb-nostr';
-import { useParams } from 'react-router-dom';
+import { nip19 } from 'nostr-tools';
+import { useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { UserRow } from '@/shared/components/user/UserRow.tsx';
+import useSearchParam from '@/shared/hooks/useSearchParam.ts';
 
 import ExplorerNode from './ExplorerNode';
 
@@ -11,11 +16,20 @@ type Props = {
 };
 
 const Explorer = ({ p }: Props) => {
-  const [pubKey] = useLocalState('user/publicKey', '');
-  const [name] = useLocalState('user/name', '');
-  const { user } = useParams();
+  const [myPubKey] = useLocalState('user/publicKey', '');
+  const user = useSearchParam('user', '');
+  const navigate = useNavigate();
+  const authors = useAuthors(user);
 
-  const publicStateText = name ? `User public state (${name})` : 'User public data';
+  useEffect(() => {
+    if (myPubKey && !user) {
+      navigate(`./?user=${nip19.npubEncode(myPubKey)}`, { replace: true });
+    }
+  }, [myPubKey, user]);
+
+  const publicNode = useMemo(() => {
+    return publicState(authors);
+  }, [authors]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -24,14 +38,14 @@ const Explorer = ({ p }: Props) => {
         <ExplorerNode expanded={true} name="Local data" node={localState} />
       </div>
       {user && (
-        <div className="mb-4">
-          <ExplorerNode expanded={true} name="User public data" node={publicState(user)} />
-        </div>
-      )}
-      {!user && pubKey && (
-        <div className="mb-4">
-          <ExplorerNode expanded={true} name={publicStateText} node={publicState(pubKey)} />
-        </div>
+        <>
+          <div className="p-4">
+            {user === 'follows' ? 'Data by followed users:' : <UserRow pubKey={user} />}
+          </div>
+          <div className="mb-4">
+            <ExplorerNode expanded={true} name="User public data" node={publicNode} />
+          </div>
+        </>
       )}
     </div>
   );
