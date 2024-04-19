@@ -115,7 +115,7 @@ export default function () {
       <p>
         <h3>#create-iris</h3>
       </p>
-      <Chat path="apps/chat/chats/create-iris/messages" />
+      <Chat path="apps/chat/chats/create-iris" />
     </div>
   );
 }

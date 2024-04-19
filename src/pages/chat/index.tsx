@@ -49,7 +49,7 @@ export default function ChatPage() {
         </div>
         {displayChat && (
           <div className="flex flex-1 flex-col gap-4">
-            <Chat path={`apps/chat/chats/${id}/messages`} />
+            <Chat path={`apps/chat/chats/${id}`} />
           </div>
         )}
         {displayCreateChat && (

@@ -23,7 +23,7 @@ export default function Chat({ path }: { path: string }) {
     if (!myPubKey) return;
     setMessages(new Map());
     return publicState(authors)
-      .get(path)
+      .get(`${path}/messages`)
       .forEach((msg, key, updatedAt) => {
         if (!updatedAt) return;
         if (!msg) {
@@ -68,7 +68,14 @@ export default function Chat({ path }: { path: string }) {
         {Array.from(messages.entries())
           .sort((a, b) => b[1].time - a[1].time)
           .map((msg) => (
-            <MessageComponent key={msg[0]} path={msg[0]} msg={msg[1]} myPubKey={myNpub} />
+            <MessageComponent
+              key={msg[0]}
+              chatPath={path}
+              path={msg[0]}
+              msg={msg[1]}
+              myNpub={myNpub}
+              authors={authors}
+            />
           ))}
       </div>
     </div>

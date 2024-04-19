@@ -1,6 +1,6 @@
 import { RiDeleteBinLine, RiEmojiStickerLine } from '@remixicon/react';
 import EmojiPicker, { Theme } from 'emoji-picker-react';
-import { usePublicState } from 'irisdb-hooks';
+import { usePublicGroupState } from 'irisdb-hooks';
 import { publicState } from 'irisdb-nostr';
 import { useEffect, useState } from 'react';
 
@@ -11,20 +11,26 @@ import { UserRow } from '@/shared/components/user/UserRow.tsx';
 export function MessageComponent({
   msg,
   path,
-  myPubKey,
+  chatPath,
+  myNpub,
+  authors,
 }: {
   msg: ChatMessage;
   path: string;
-  myPubKey: string;
+  chatPath: string;
+  myNpub: string;
+  authors: string[];
 }) {
   console.log('msg', path);
-  const isMine = msg.author === myPubKey;
+  const isMine = msg.author === myNpub;
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [myReaction, setMyReaction] = usePublicState(
-    [myPubKey],
-    `apps/chat/reactions/${encodeURIComponent(path)}`,
-    '',
+  const [reactions, setReaction] = usePublicGroupState(
+    authors,
+    `${chatPath}/reactions/${encodeURIComponent(path)}`,
+    (val) => String(val).slice(0, 2),
   );
+
+  console.log('reactions', reactions);
 
   useEffect(() => {
     // if showEmojiPicker is true, add handler to close on esc
@@ -66,40 +72,49 @@ export function MessageComponent({
         </div>
       </div>
       <div className="text-sm">{msg.content}</div>
-      {myReaction && (
-        <div className="flex flex-row items-center justify-end">
-          <span className="cursor-pointer" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-            {myReaction}
-          </span>
+      <div className="flex flex-row items-center justify-end">
+        <div
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+          className="cursor-pointer flex gap-1"
+        >
+          {Array.from(reactions.entries()).map(([path, reaction]) => {
+            if (!reaction || path.indexOf('npub') !== 0) return null;
+            return <span>{reaction}</span>;
+          })}
         </div>
-      )}
+      </div>
+
       {showEmojiPicker && (
         <dialog id="my_modal_3" className="modal modal-open">
           <div className="modal-box flex flex-col gap-4 items-center justify-center">
-            {myPubKey && (
+            {myNpub && (
               <EmojiPicker
                 reactionsDefaultOpen={true}
                 theme={Theme.AUTO}
                 onEmojiClick={(e) => {
-                  setMyReaction(e.emoji);
+                  setReaction(e.emoji);
                   setShowEmojiPicker(false);
                 }}
               />
             )}
-            {myReaction && (
-              <div className="flex flex-1 w-full flex-row gap-4 justify-between items-center">
-                <div className="flex flex-row gap-4 items-center">
-                  <span className="text-2xl">{myReaction}</span>
-                  <UserRow pubKey={myPubKey} />
+            {Array.from(reactions.entries()).map(([path, reaction]) => {
+              const pubKey = path.split('/')[0];
+              if (!reaction || pubKey.indexOf('npub') !== 0) return null;
+              return (
+                <div className="flex flex-1 w-full flex-row gap-4 justify-between items-center">
+                  <div key={path} className="flex flex-row gap-4 items-center">
+                    <span>{reaction}</span>
+                    <UserRow pubKey={pubKey} />
+                  </div>
+                  <button
+                    className="btn btn-neutral cursor-pointer"
+                    onClick={() => setReaction('')}
+                  >
+                    <RiDeleteBinLine className="w-4 h-4" />
+                  </button>
                 </div>
-                <button
-                  className="btn btn-neutral cursor-pointer"
-                  onClick={() => setMyReaction('')}
-                >
-                  <RiDeleteBinLine className="w-4 h-4" />
-                </button>
-              </div>
-            )}
+              );
+            })}
           </div>
           <form method="dialog" className="modal-backdrop">
             <button onClick={() => setShowEmojiPicker(false)}>close</button>
