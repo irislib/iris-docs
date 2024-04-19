@@ -36,7 +36,6 @@ export default function Chat({ path }: { path: string }) {
         }
         const author = key.split('/')[0];
         const content = String(msg);
-        console.log('key', key, 'msg', msg);
         setMessages((prev) => new Map(prev.set(key, { author, time: updatedAt, content })));
       });
   }, [myPubKey, authors, path]);
@@ -48,7 +47,7 @@ export default function Chat({ path }: { path: string }) {
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!newMessage) return;
-    publicState(authors).get(`${path}/${new Date().toISOString()}`).put(newMessage);
+    publicState(authors).get(`${path}/messages/${new Date().toISOString()}`).put(newMessage);
     setNewMessage('');
   }
 

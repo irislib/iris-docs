@@ -21,7 +21,6 @@ export function MessageComponent({
   myNpub: string;
   authors: string[];
 }) {
-  console.log('msg', path);
   const isMine = msg.author === myNpub;
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [reactions, setReaction] = usePublicGroupState(
@@ -29,8 +28,6 @@ export function MessageComponent({
     `${chatPath}/reactions/${encodeURIComponent(path)}`,
     (val) => String(val).slice(0, 2),
   );
-
-  console.log('reactions', reactions);
 
   useEffect(() => {
     // if showEmojiPicker is true, add handler to close on esc
