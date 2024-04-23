@@ -1,6 +1,9 @@
 import { RiLinkM, RiThunderstormsFill } from '@remixicon/react';
 import classNames from 'classnames';
-import { useParams } from 'react-router-dom';
+import { useLocalState } from 'irisdb-hooks';
+import { PublicKey } from 'irisdb-nostr';
+import { useMemo } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
 import { FollowButton } from '@/shared/components/FollowButton.tsx';
 import { Avatar } from '@/shared/components/user/Avatar.tsx';
@@ -11,6 +14,15 @@ export default function UserPage() {
   const { pubKey } = useParams();
 
   const profile = useProfile(pubKey);
+
+  const pubKeyHex = useMemo(() => {
+    if (!pubKey) {
+      return '';
+    }
+    return new PublicKey(pubKey).toString();
+  }, [pubKey]);
+
+  const [myPubKey] = useLocalState('user/publicKey', '', String);
 
   if (!pubKey) return null;
 
@@ -23,7 +35,13 @@ export default function UserPage() {
         <div className={classNames('flex flex-col gap-4 p-2', { '-mt-16': profile?.banner })}>
           <div className="flex flex-row items-center gap-8 mt-4 justify-between">
             <Avatar pubKey={pubKey} showBadge={false} className="w-24 h-24" />
-            <FollowButton pubKey={pubKey} />
+            {myPubKey && myPubKey === pubKeyHex ? (
+              <Link to="/settings" className="btn btn-sm btn-primary">
+                Edit profile
+              </Link>
+            ) : (
+              <FollowButton pubKey={pubKey} />
+            )}
           </div>
           <div className="text-2xl font-bold">
             <Name pubKey={pubKey} />

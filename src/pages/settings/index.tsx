@@ -1,4 +1,5 @@
 import { Network } from '@/pages/settings/Network.tsx';
+import { Profile } from '@/pages/settings/Profile.tsx';
 import { SubscriptionTab } from '@/pages/subscription/SubscriptionTab.tsx';
 
 export default function Settings() {
@@ -7,6 +8,7 @@ export default function Settings() {
       <div className="container max-w-3xl p-4 md:p-8 my-5 bg-base-100 rounded-lg shadow">
         <h1 className="text-3xl font-semibold mb-6">Settings</h1>
         <Network />
+        <Profile />
         <SubscriptionTab />
       </div>
     </div>
