@@ -6,8 +6,8 @@ import { nip19 } from 'nostr-tools';
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import Show from '@/shared/components/Show';
-import { UserRow } from '@/shared/components/user/UserRow';
+import Show from '@/shared/components/Show.tsx';
+import { UserRow } from '@/shared/components/user/UserRow.tsx';
 
 const NSEC_NPUB_REGEX = /(nsec1|npub1)[a-zA-Z0-9]{20,65}/gi;
 

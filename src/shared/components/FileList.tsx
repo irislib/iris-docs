@@ -12,7 +12,7 @@ import { FormEvent, MouseEvent, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import { FollowButton } from '@/shared/components/FollowButton.tsx';
+import { FollowButton } from '@/shared/components/button/FollowButton.tsx';
 import NodeValue from '@/shared/components/NodeValue.tsx';
 import { RelativeTime } from '@/shared/components/RelativeTime.tsx';
 import Show from '@/shared/components/Show';

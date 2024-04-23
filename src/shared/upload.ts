@@ -1,4 +1,4 @@
-export async function uploadFile(file: File) {
+export async function uploadFile(file: File): Promise<string> {
   const fd = new FormData();
   fd.append('fileToUpload', file);
   fd.append('submit', 'Upload Image');

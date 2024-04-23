@@ -1,5 +1,5 @@
 import QrCode from '@/pages/subscription/QrCode.tsx';
-import CopyButton from '@/shared/components/CopyButton.tsx';
+import CopyButton from '@/shared/components/button/CopyButton.tsx';
 
 export function Invoice({ invoice, notice }: { invoice: string; notice?: string }) {
   return (

@@ -5,7 +5,7 @@ import { nip19 } from 'nostr-tools';
 import { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import CopyButton from '@/shared/components/CopyButton';
+import CopyButton from '@/shared/components/button/CopyButton.tsx';
 import { FollowUserForm } from '@/shared/components/share/FollowUserForm';
 import Show from '@/shared/components/Show';
 import { UserRow } from '@/shared/components/user/UserRow';

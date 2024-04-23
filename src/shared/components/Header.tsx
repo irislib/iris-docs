@@ -7,8 +7,8 @@ import { NavSideBar } from '@/shared/components/NavSideBar.tsx';
 import NodeValue from '@/shared/components/NodeValue';
 import ShareButton from '@/shared/components/share/ShareButton';
 import Show from '@/shared/components/Show';
-import UserButton from '@/shared/components/UserButton';
-import { ViewingUsers } from '@/shared/components/ViewingUsers';
+import UserButton from '@/shared/components/user/UserButton.tsx';
+import { ViewingUsers } from '@/shared/components/user/ViewingUsers.tsx';
 import useSearchParam from '@/shared/hooks/useSearchParam';
 
 export default function Header() {

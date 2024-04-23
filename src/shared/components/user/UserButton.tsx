@@ -3,9 +3,9 @@ import { useLocalState } from 'irisdb-hooks';
 import { useCallback, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import LoginDialog from '@/shared/components/LoginDialog';
-import Show from '@/shared/components/Show';
-import { Avatar } from '@/shared/components/user/Avatar';
+import Show from '@/shared/components/Show.tsx';
+import { Avatar } from '@/shared/components/user/Avatar.tsx';
+import LoginDialog from '@/shared/components/user/LoginDialog.tsx';
 
 export default function UserButton() {
   const [pubKey] = useLocalState('user/publicKey', '', String);

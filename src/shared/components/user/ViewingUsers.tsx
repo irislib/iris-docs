@@ -2,7 +2,7 @@ import { useLocalState } from 'irisdb-hooks';
 import { publicState } from 'irisdb-nostr';
 import { useEffect, useState } from 'react';
 
-import { Avatar } from '@/shared/components/user/Avatar';
+import { Avatar } from '@/shared/components/user/Avatar.tsx';
 
 interface ViewingUsersProps {
   file: string;

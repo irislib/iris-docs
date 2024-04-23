@@ -3,10 +3,10 @@ import { useLocalState } from 'irisdb-hooks';
 import { ndk } from 'irisdb-nostr';
 import { useEffect, useMemo, useState } from 'react';
 
-import { Avatar } from '@/shared/components/user/Avatar.tsx';
-import useProfile from '@/shared/hooks/useProfile.ts';
+import UploadButton from '@/shared/components/button/UploadButton';
+import useProfile from '@/shared/hooks/useProfile';
 
-export function Profile() {
+export function ProfileSettings() {
   const [myPubKey] = useLocalState('user/publicKey', '');
 
   const existingProfile = useProfile(myPubKey);
@@ -58,6 +58,8 @@ export function Profile() {
     return null;
   }
 
+  console.log('existingProfile', existingProfile);
+
   return (
     <div className="mb-4">
       <h2 className="text-2xl mb-4">Profile</h2>
@@ -74,9 +76,15 @@ export function Profile() {
             onChange={(e) => setProfileField('name', e.target.value)}
           />
         </label>
-        <div className="flex items-center gap-4 my-4">
-          <Avatar showBadge={false} className="w-24 h-24" pubKey={myPubKey} />
-        </div>
+        {(newProfile?.picture || existingProfile?.picture) && (
+          <div className="flex items-center gap-4 my-4">
+            <img
+              src={newProfile?.picture || existingProfile?.picture}
+              className="w-24 h-24 rounded-full"
+              alt="Profile picture"
+            />
+          </div>
+        )}
         <label className="form-control w-full max-w-xs">
           <div className="label">
             <span className="label-text">Image</span>
@@ -84,10 +92,11 @@ export function Profile() {
           <input
             type="text"
             placeholder="Image"
-            className="input input-bordered w-full max-w-xs"
-            value={newProfile?.image}
-            onChange={(e) => setProfileField('image', e.target.value)}
+            className="input input-bordered w-full max-w-xs mb-4"
+            value={newProfile?.picture}
+            onChange={(e) => setProfileField('picture', e.target.value)}
           />
+          <UploadButton text="Upload new" onUpload={(url) => setProfileField('picture', url)} />
         </label>
         <label className="form-control w-full max-w-xs">
           <div className="label">

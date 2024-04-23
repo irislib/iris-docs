@@ -5,7 +5,7 @@ import { PublicKey } from 'irisdb-nostr';
 import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { FollowButton } from '@/shared/components/FollowButton.tsx';
+import { FollowButton } from '@/shared/components/button/FollowButton.tsx';
 import { Avatar } from '@/shared/components/user/Avatar.tsx';
 import { Name } from '@/shared/components/user/Name.tsx';
 import useProfile from '@/shared/hooks/useProfile.ts';

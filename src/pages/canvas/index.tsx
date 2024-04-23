@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import Canvas from '@/pages/canvas/Canvas';
 import { FileList } from '@/shared/components/FileList';
-import LoginDialog from '@/shared/components/LoginDialog';
 import Show from '@/shared/components/Show';
+import LoginDialog from '@/shared/components/user/LoginDialog.tsx';
 import useSearchParam from '@/shared/hooks/useSearchParam';
 
 export default function CanvasPage() {

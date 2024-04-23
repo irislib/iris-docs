@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import Document from '@/pages/document/Document';
 import { FileList } from '@/shared/components/FileList';
-import LoginDialog from '@/shared/components/LoginDialog';
 import Show from '@/shared/components/Show';
+import LoginDialog from '@/shared/components/user/LoginDialog.tsx';
 import useSearchParam from '@/shared/hooks/useSearchParam';
 
 export default function DocsPage() {
