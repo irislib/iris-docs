@@ -3,7 +3,7 @@ import { useAuthors, useLocalState } from 'irisdb-hooks';
 import { publicState } from 'irisdb-nostr';
 import { nip19 } from 'nostr-tools';
 import { useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { UserRow } from '@/shared/components/user/UserRow.tsx';
 import useSearchParam from '@/shared/hooks/useSearchParam.ts';
@@ -40,7 +40,13 @@ const Explorer = ({ p }: Props) => {
       {user && (
         <>
           <div className="p-4">
-            {user === 'follows' ? 'Data by followed users:' : <UserRow pubKey={user} />}
+            {user === 'follows' ? (
+              'Data by followed users:'
+            ) : (
+              <Link to={`/user/${user}`}>
+                <UserRow pubKey={user} />
+              </Link>
+            )}
           </div>
           <div className="mb-4">
             <ExplorerNode expanded={true} name="User public data" node={publicNode} />

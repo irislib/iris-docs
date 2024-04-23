@@ -28,11 +28,11 @@ export default function UserPage() {
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <div className="flex flex-col gap-4 w-full max-w-prose">
+      <div className="flex flex-col gap-4 w-full max-w-prose bg-base-100">
         {profile?.banner && (
           <img src={profile.banner} className="w-full h-48 object-cover" alt="Banner" />
         )}
-        <div className={classNames('flex flex-col gap-4 p-2', { '-mt-16': profile?.banner })}>
+        <div className={classNames('flex flex-col gap-4 p-4', { '-mt-16': profile?.banner })}>
           <div className="flex flex-row items-center gap-8 mt-4 justify-between">
             <Avatar pubKey={pubKey} showBadge={false} className="w-24 h-24" />
             {myPubKey && myPubKey === pubKeyHex ? (

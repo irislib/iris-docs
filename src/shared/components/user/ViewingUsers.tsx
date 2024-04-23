@@ -1,6 +1,8 @@
 import { useLocalState } from 'irisdb-hooks';
 import { publicState } from 'irisdb-nostr';
-import { useEffect, useState } from 'react';
+import { nip19 } from 'nostr-tools';
+import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Avatar } from '@/shared/components/user/Avatar.tsx';
 
@@ -11,6 +13,7 @@ interface ViewingUsersProps {
 
 export function ViewingUsers({ file, authors }: ViewingUsersProps) {
   const [myPubKey] = useLocalState('user/publicKey', '');
+  const myNpub = useMemo(() => (myPubKey ? nip19.npubEncode(myPubKey) : ''), [myPubKey]);
   const [viewingUsers, setViewingUsers] = useState<Map<string, number>>(new Map());
 
   useEffect(() => {
@@ -20,7 +23,7 @@ export function ViewingUsers({ file, authors }: ViewingUsersProps) {
       if (typeof nodePath !== 'string' || !updatedAt) return;
       const user = nodePath.split('/')[0];
       if (!user) return;
-      if (user === myPubKey) return;
+      if (user === myNpub) return;
       const existing = viewingUsers.get(user);
       if (existing && existing > updatedAt) return;
       // updatedAt must be at most 30s old. make a timer to remove the user when 30s has elapsed from updatedAt
@@ -45,7 +48,7 @@ export function ViewingUsers({ file, authors }: ViewingUsersProps) {
       publicState(authors)
         .get(file)
         .get('viewing')
-        .get(String(myPubKey))
+        .get(String(myNpub))
         .put(isViewing, undefined, expiresAt);
     };
     setViewing();
@@ -72,7 +75,9 @@ export function ViewingUsers({ file, authors }: ViewingUsersProps) {
   return (
     <div className="hidden md:flex flex-row items-center gap-2">
       {Array.from(viewingUsers.keys()).map((k) => (
-        <Avatar key={k} pubKey={k} className="w-8 h-8" />
+        <Link to={`/user/${k}`} key={k}>
+          <Avatar key={k} pubKey={k} className="w-8 h-8" />
+        </Link>
       ))}
     </div>
   );

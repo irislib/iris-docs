@@ -1,5 +1,5 @@
 import { NDKUserProfile } from '@nostr-dev-kit/ndk';
-import { useLocalState } from 'irisdb-hooks';
+import { useLocalState, usePublicState } from 'irisdb-hooks';
 import { ndk } from 'irisdb-nostr';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -8,6 +8,7 @@ import useProfile from '@/shared/hooks/useProfile';
 
 export function ProfileSettings() {
   const [myPubKey] = useLocalState('user/publicKey', '');
+  const [, setIrisProfile] = usePublicState(myPubKey ? [myPubKey] : [], 'user/profile', null);
 
   const existingProfile = useProfile(myPubKey);
 
@@ -44,7 +45,8 @@ export function ProfileSettings() {
     }
     user.profile = newProfile;
     console.log('save profile', newProfile);
-    user.publish(); // this is triggered and event is sent to relays, but for some reason the profile is not updated?
+    user.publish();
+    setIrisProfile(newProfile);
   }
 
   const isEdited = useMemo(() => {
@@ -58,7 +60,7 @@ export function ProfileSettings() {
     return null;
   }
 
-  console.log('existingProfile', existingProfile);
+  console.log('existingProfile', existingProfile); // TODO something causing render loop?
 
   return (
     <div className="mb-4">
@@ -76,7 +78,7 @@ export function ProfileSettings() {
             onChange={(e) => setProfileField('name', e.target.value)}
           />
         </label>
-        {(newProfile?.picture || existingProfile?.picture) && (
+        {newProfile?.picture && (
           <div className="flex items-center gap-4 my-4">
             <img
               src={newProfile?.picture || existingProfile?.picture}
@@ -97,6 +99,22 @@ export function ProfileSettings() {
             onChange={(e) => setProfileField('picture', e.target.value)}
           />
           <UploadButton text="Upload new" onUpload={(url) => setProfileField('picture', url)} />
+        </label>
+        {newProfile?.banner && (
+          <img src={newProfile?.banner} alt="Banner" className="w-full h-48 object-cover" />
+        )}
+        <label className="form-control w-full max-w-xs">
+          <div className="label">
+            <span className="label-text">Banner</span>
+          </div>
+          <input
+            type="text"
+            placeholder="Image"
+            className="input input-bordered w-full max-w-xs mb-4"
+            value={newProfile?.banner}
+            onChange={(e) => setProfileField('banner', e.target.value)}
+          />
+          <UploadButton text="Upload new" onUpload={(url) => setProfileField('banner', url)} />
         </label>
         <label className="form-control w-full max-w-xs">
           <div className="label">

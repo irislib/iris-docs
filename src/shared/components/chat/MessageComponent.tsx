@@ -3,6 +3,7 @@ import EmojiPicker, { Theme } from 'emoji-picker-react';
 import { usePublicGroupState } from 'irisdb-hooks';
 import { publicState } from 'irisdb-nostr';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { ChatMessage } from '@/shared/components/chat/Chat.tsx';
 import { RelativeTime } from '@/shared/components/RelativeTime.tsx';
@@ -54,7 +55,9 @@ export function MessageComponent({
     <div className="flex flex-col mb-4 p-2 bg-base-100 rounded-md gap-2">
       <div className="flex items-start justify-between">
         <div className="text-sm font-bold">
-          <UserRow pubKey={msg.author} />
+          <Link to={`/user/${msg.author}`}>
+            <UserRow pubKey={msg.author} />
+          </Link>
         </div>
         <div className="text-xs flex flex-row items-center gap-4">
           <span className="cursor-pointer" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
