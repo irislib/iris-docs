@@ -3,7 +3,8 @@ import classNames from 'classnames';
 import { useLocalState } from 'irisdb-hooks';
 import { DEFAULT_RELAYS, newUserLogin, privateKeyLogin } from 'irisdb-nostr';
 import { nip19 } from 'nostr-tools';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import Show from '@/shared/components/Show';
 import { UserRow } from '@/shared/components/user/UserRow';
@@ -25,6 +26,8 @@ export default function LoginDialog() {
       window.open('https://nostrcheck.me/register/browser-extension.php', '_blank');
     }
   }
+
+  const npub = useMemo(() => (publicKey ? nip19.npubEncode(publicKey) : ''), [publicKey]);
 
   useEffect(() => {
     // TODO proper validation
@@ -111,7 +114,9 @@ export default function LoginDialog() {
         </Show>
         <Show when={!!publicKey}>
           <div className="flex flex-col gap-2">
-            <UserRow pubKey={publicKey} />
+            <Link to={`/user/${npub}`} className="text-lg font-bold">
+              <UserRow pubKey={publicKey} />
+            </Link>
             <button className="btn btn-sm btn-primary" onClick={() => copyPublicKey()}>
               Copy public key
             </button>

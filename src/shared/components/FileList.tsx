@@ -169,7 +169,9 @@ export function FileList({ directory, baseUrl }: { directory: string; baseUrl: s
                 </>
               ) : (
                 <>
-                  <UserRow pubKey={user!} />
+                  <Link to={`/user/${user}`} className="flex items-center gap-2 flex-row">
+                    <UserRow pubKey={user!} />
+                  </Link>
                   <FollowButton pubKey={user!} />
                 </>
               )}

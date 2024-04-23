@@ -1,6 +1,7 @@
 import { RiLoginBoxLine } from '@remixicon/react';
 import { useLocalState } from 'irisdb-hooks';
 import { useCallback, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import LoginDialog from '@/shared/components/LoginDialog';
 import Show from '@/shared/components/Show';
@@ -9,6 +10,7 @@ import { Avatar } from '@/shared/components/user/Avatar';
 export default function UserButton() {
   const [pubKey] = useLocalState('user/publicKey', '', String);
   const userModal = useRef<HTMLDialogElement>(null);
+  const location = useLocation();
 
   const showModal = useCallback(() => {
     userModal.current?.showModal();
@@ -16,7 +18,7 @@ export default function UserButton() {
 
   useEffect(() => {
     userModal.current?.close();
-  }, [pubKey]);
+  }, [pubKey, location]);
 
   return (
     <>
