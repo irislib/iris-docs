@@ -18,7 +18,7 @@ export default function () {
       <p>Files to edit:</p>
       <ul className="list-disc">
         <li>
-          This page: <code>src/pages/create-iris/index.tsx</code>
+          This page: <code>src/pages/home/index.tsx</code>
         </li>
         <li>
           Navigation sidebar: <code>src/shared/components/NavSideBar.tsx</code>

@@ -3,9 +3,9 @@ import { createBrowserRouter, createRoutesFromElements, Route } from 'react-rout
 import config from '@/config.json';
 import CanvasPage from '@/pages/canvas';
 import ChatPage from '@/pages/chat';
-import CreateIris from '@/pages/create-iris';
 import DocsPage from '@/pages/document';
 import Explorer from '@/pages/explorer/Explorer';
+import CreateIris from '@/pages/home';
 import SettingsPage from '@/pages/settings';
 import Subscribe from '@/pages/subscription';
 import UserPage from '@/pages/user';

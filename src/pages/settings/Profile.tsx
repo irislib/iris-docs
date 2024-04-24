@@ -81,7 +81,7 @@ export function ProfileSettings() {
         {newProfile?.picture && (
           <div className="flex items-center gap-4 my-4">
             <img
-              src={newProfile?.picture || existingProfile?.picture}
+              src={String(newProfile?.picture || existingProfile?.picture)}
               className="w-24 h-24 rounded-full"
               alt="Profile picture"
             />
