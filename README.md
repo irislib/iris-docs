@@ -30,7 +30,7 @@ docker-compose up
 [![Open in Codespace](https://img.shields.io/badge/Open%20in-Codespace-blue.svg)](https://github.com/codespaces/new?repo=irislib/iris-docs)
 
 ## create-iris
-This project is also a template for quickly getting started with [IrisDB](https://github.com/irislib/irisdb) & [Nostr](https://nostr.com) web application development.
+Create your own [IrisDB](https://github.com/irislib/irisdb) or [Nostr](https://nostr.com) application? This project can be used as a template with `npm create iris@latest`.
 
 It has basic building blocks like app routing, navigation, authentication, network settings, social networking and
 IrisDB usage examples.
