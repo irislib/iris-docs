@@ -15,10 +15,19 @@ For text document sync, we use https://github.com/yjs/yjs
 Deployed on [docs.iris.to](https://docs.iris.to/)
 
 ## Development
+### npm
 ```sh
 npm install
 npm run dev
 ```
+
+### docker-compose
+```sh
+docker-compose up
+```
+
+### Codespace
+[![Open in Codespace](https://img.shields.io/badge/Open%20in-Codespace-blue.svg)](https://github.com/codespaces/new?repo=irislib/iris-docs)
 
 ## create-iris
 This project is also a template for quickly getting started with [IrisDB](https://github.com/irislib/irisdb) & [Nostr](https://nostr.com) web application development.
@@ -29,8 +38,6 @@ IrisDB usage examples.
 ```
 npm create iris@latest
 ```
-
-[![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/import/github/irislib/iris-docs)
 
 ## Stack
 * [Vite](https://vitejs.dev/) - Build and development environment
