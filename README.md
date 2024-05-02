@@ -14,6 +14,12 @@ For text document sync, we use https://github.com/yjs/yjs
 
 Deployed on [docs.iris.to](https://docs.iris.to/)
 
+## Development
+```sh
+npm install
+npm run dev
+```
+
 ## create-iris
 This project is also a template for quickly getting started with [IrisDB](https://github.com/irislib/irisdb) & [Nostr](https://nostr.com) web application development.
 
@@ -36,9 +42,3 @@ npm create iris@latest
 * [yjs](https://github.com/yjs/yjs) for collaborative text documents
 * [TipTap](https://github.com/ueberdosis/tiptap) for collaborative rich text documents
 * [Remix Icon](https://remixicon.com/) for icons
-
-## Development
-```sh
-npm install
-npm run dev
-```
