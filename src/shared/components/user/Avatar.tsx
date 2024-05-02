@@ -64,7 +64,7 @@ export const Avatar = ({
       className={`${className || 'w-12 h-12'} rounded-full bg-base-100 flex items-center justify-center border-base-content border-2 indicator`}
     >
       {getBadge()}
-      <div className="w-full rounded-full overflow-hidden">
+      <div className="w-full rounded-full overflow-hidden aspect-square not-prose">
         {image ? (
           <img
             src={image}
