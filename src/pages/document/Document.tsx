@@ -68,6 +68,7 @@ export default function Document() {
   );
 
   useEffect(() => {
+    if (!myPubKey) return;
     let val = owner;
     try {
       val = new PublicKey(owner).toString();
@@ -75,7 +76,7 @@ export default function Document() {
       // ignore
     }
     publicState(authors).get(docName).get('owner').put(val);
-  }, [docName, owner]);
+  }, [docName, owner, myPubKey]);
 
   useEffect(() => {
     const doc = publicState(authors).get(docName);
