@@ -39,7 +39,7 @@ export default function Canvas() {
   const [scale, setScale] = useState(1);
   const docName = useMemo(() => `apps/canvas/documents/${file || 'public'}`, [file]);
   const authors = useAuthors(
-    owner || 'public',
+    owner || 'follows',
     owner !== 'follows' ? `${docName}/writers` : undefined,
   );
   const editable = authors.includes(myPubKey);

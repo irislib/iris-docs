@@ -26,7 +26,7 @@ export function ShareMenuModal({
   }, [owner]);
   const fileName = useMemo(() => filePath.split('/').pop(), [filePath]);
   const authors = useAuthors(
-    owner || 'public',
+    owner || 'follows',
     owner !== 'follows' ? `${filePath}/writers` : undefined,
   );
 
