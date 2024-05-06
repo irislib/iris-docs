@@ -9,6 +9,7 @@ import CreateIris from '@/pages/home';
 import SettingsPage from '@/pages/settings';
 import Subscribe from '@/pages/subscription';
 import UserPage from '@/pages/user';
+import WebRtcPage from '@/pages/webrtc';
 import Layout from '@/shared/components/Layout';
 
 export const router = createBrowserRouter(
@@ -23,6 +24,7 @@ export const router = createBrowserRouter(
       <Route path="/document/:file?" element={<DocsPage />} />
       <Route path="/chat/:id?" element={<ChatPage />} />
       <Route path="/create-iris" element={<CreateIris />} />
+      <Route path="/webrtc" element={<WebRtcPage />} />
     </Route>,
   ]),
 );
