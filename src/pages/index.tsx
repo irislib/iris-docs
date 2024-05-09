@@ -5,7 +5,7 @@ import CanvasPage from '@/pages/canvas';
 import ChatPage from '@/pages/chat';
 import DocsPage from '@/pages/document';
 import Explorer from '@/pages/explorer/Explorer';
-import CreateIris from '@/pages/home';
+import HomePage from '@/pages/home';
 import SettingsPage from '@/pages/settings';
 import Subscribe from '@/pages/subscription';
 import UserPage from '@/pages/user';
@@ -14,7 +14,7 @@ import Layout from '@/shared/components/Layout';
 export const router = createBrowserRouter(
   createRoutesFromElements([
     <Route element={<Layout />}>
-      <Route path="/" element={config.isCreateIris ? <CreateIris /> : <DocsPage />} />
+      <Route path="/" element={config.isCreateIris ? <HomePage /> : <DocsPage />} />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="/user/:pubKey" element={<UserPage />} />
       <Route path="/explorer/:file?" element={<Explorer />} />
@@ -22,7 +22,7 @@ export const router = createBrowserRouter(
       <Route path="/canvas/:file?" element={<CanvasPage />} />
       <Route path="/document/:file?" element={<DocsPage />} />
       <Route path="/chat/:id?" element={<ChatPage />} />
-      <Route path="/create-iris" element={<CreateIris />} />
+      <Route path="/create-iris" element={<HomePage />} />
     </Route>,
   ]),
 );
