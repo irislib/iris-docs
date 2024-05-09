@@ -24,5 +24,6 @@ docs
 *.sln
 *.sw?
 
-# Don't ignore .gitignore
+# Don't ignore .gitignore and .npmignore itself
 !.gitignore
+!.npmignore
