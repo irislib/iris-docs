@@ -7,6 +7,7 @@ import {
   RiInformationLine,
   RiSettings3Line,
   RiVipCrownLine,
+  RiWifiLine, // Added this import for the online icon
 } from '@remixicon/react';
 import { useLocalState } from 'irisdb-hooks';
 import { useEffect, useRef } from 'react';
@@ -100,6 +101,12 @@ export const NavSideBar = ({
           <Link to="/chat">
             <RiChat3Line className="w-5 h-5" />
             Chat
+          </Link>
+        </li>
+        <li>
+          <Link to="/online">
+            <RiWifiLine className="w-5 h-5" />
+            Online
           </Link>
         </li>
       </ul>
