@@ -26,8 +26,8 @@
   },
   "dependencies": {
     "@noble/hashes": "^1.4.0",
-    "@nostr-dev-kit/ndk": "^2.8.2",
-    "@nostr-dev-kit/ndk-cache-dexie": "^2.4.2",
+    "@nostr-dev-kit/ndk": "^2.10.0",
+    "@nostr-dev-kit/ndk-cache-dexie": "^2.5.1",
     "@remixicon/react": "^4.2.0",
     "@tiptap/extension-collaboration": "^2.3.1",
     "@tiptap/extension-highlight": "^2.3.1",
