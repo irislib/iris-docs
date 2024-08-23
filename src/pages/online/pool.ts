@@ -84,7 +84,17 @@ export class WebRtcPool extends EventEmitter {
           this.peerConnections.size < this.maxConnections &&
           !this.isPeerConnectionOpen(peerId)
         ) {
-          this.createPeerConnection(peerId).createOffer();
+          // Use a tie-breaking mechanism to decide who creates the offer
+          if (this.myPeerId.uuid < data.peerId) {
+            this.createPeerConnection(peerId).createOffer();
+          } else {
+            // Set a timeout to send an offer if one isn't received within 2 seconds
+            setTimeout(() => {
+              if (!this.isPeerConnectionOpen(peerId)) {
+                this.createPeerConnection(peerId).createOffer();
+              }
+            }, 2000);
+          }
           console.log('Received hello message:', data);
         }
         this.updateOnlineUsers(peerId);
