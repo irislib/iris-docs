@@ -48,9 +48,9 @@ export default class PeerConnection extends EventEmitter {
     };
 
     this.peerConnection.onconnectionstatechange = () => {
-      console.log('Connection state:', this.peerConnection.connectionState);
+      log('Connection state:', this.peerConnection.connectionState);
       if (this.peerConnection.connectionState === 'closed') {
-        console.log(`${this.peerId} connection closed`);
+        log(`${this.peerId} connection closed`);
         this.close();
       }
     };
@@ -79,12 +79,12 @@ export default class PeerConnection extends EventEmitter {
 
   setDataChannel(dataChannel: RTCDataChannel) {
     this.dataChannel = dataChannel;
-    this.dataChannel.onopen = () => console.log('Data channel is open');
+    this.dataChannel.onopen = () => log('Data channel is open');
     this.dataChannel.onmessage = (event) => {
-      console.log('Received message:', event.data);
+      log('Received message:', event.data);
     };
     this.dataChannel.onclose = () => {
-      console.log('Data channel is closed');
+      log('Data channel is closed');
       this.close();
     };
   }
@@ -92,30 +92,30 @@ export default class PeerConnection extends EventEmitter {
   setFileChannel(fileChannel: RTCDataChannel) {
     this.fileChannel = fileChannel;
     this.fileChannel.binaryType = 'arraybuffer';
-    this.fileChannel.onopen = () => console.log('File channel is open');
+    this.fileChannel.onopen = () => log('File channel is open');
     this.fileChannel.onmessage = (event) => {
-      console.log('File channel received message:', event.data);
+      log('File channel received message:', event.data);
       if (typeof event.data === 'string') {
         const metadata = JSON.parse(event.data);
         if (metadata.type === 'file-metadata') {
           this.incomingFileMetadata = metadata.metadata;
           this.receivedFileData = [];
           this.receivedFileSize = 0;
-          console.log('Received file metadata:', this.incomingFileMetadata);
+          log('Received file metadata:', this.incomingFileMetadata);
         }
       } else if (event.data instanceof ArrayBuffer) {
         this.receivedFileData.push(event.data);
         this.receivedFileSize += event.data.byteLength;
-        console.log('Received file chunk:', event.data.byteLength, 'bytes');
-        console.log('Total received size:', this.receivedFileSize, 'bytes');
+        log('Received file chunk:', event.data.byteLength, 'bytes');
+        log('Total received size:', this.receivedFileSize, 'bytes');
 
         if (this.incomingFileMetadata) {
-          console.log('Expected file size:', this.incomingFileMetadata.size, 'bytes');
+          log('Expected file size:', this.incomingFileMetadata.size, 'bytes');
           if (this.receivedFileSize === this.incomingFileMetadata.size) {
-            console.log('File fully received, saving file...');
+            log('File fully received, saving file...');
             this.saveReceivedFile();
           } else {
-            console.log('File not fully received, waiting...');
+            log('File not fully received, waiting...');
           }
         } else {
           console.error('No file metadata available');
@@ -123,7 +123,7 @@ export default class PeerConnection extends EventEmitter {
       }
     };
     this.fileChannel.onclose = () => {
-      console.log('File channel is closed');
+      log('File channel is closed');
     };
   }
 
@@ -135,42 +135,42 @@ export default class PeerConnection extends EventEmitter {
 
     const confirmString = `Save ${this.incomingFileMetadata.name} from ${this.peerId}?`;
     if (!confirm(confirmString)) {
-      console.log('User did not confirm file save');
+      log('User did not confirm file save');
       this.incomingFileMetadata = null;
       this.receivedFileData = [];
       this.receivedFileSize = 0;
       return;
     }
 
-    console.log('Saving file with metadata:', this.incomingFileMetadata);
-    console.log('Total received file data size:', this.receivedFileSize);
+    log('Saving file with metadata:', this.incomingFileMetadata);
+    log('Total received file data size:', this.receivedFileSize);
 
     const blob = new Blob(this.receivedFileData, { type: this.incomingFileMetadata.type });
-    console.log('Created Blob:', blob);
+    log('Created Blob:', blob);
 
     const url = URL.createObjectURL(blob);
-    console.log('Created Object URL:', url);
+    log('Created Object URL:', url);
 
     const a = document.createElement('a');
     a.href = url;
     a.download = this.incomingFileMetadata.name;
     document.body.appendChild(a);
-    console.log('Appended anchor element to body:', a);
+    log('Appended anchor element to body:', a);
 
     a.click();
-    console.log('Triggered download');
+    log('Triggered download');
 
     document.body.removeChild(a);
-    console.log('Removed anchor element from body');
+    log('Removed anchor element from body');
 
     URL.revokeObjectURL(url);
-    console.log('Revoked Object URL');
+    log('Revoked Object URL');
 
     // Reset file data
     this.incomingFileMetadata = null;
     this.receivedFileData = [];
     this.receivedFileSize = 0;
-    console.log('Reset file data');
+    log('Reset file data');
   }
 
   sendJsonData(jsonData: unknown) {
@@ -197,7 +197,7 @@ export default class PeerConnection extends EventEmitter {
         },
       };
       fileChannel.onopen = () => {
-        console.log('File channel is open, sending metadata');
+        log('File channel is open, sending metadata');
         fileChannel.send(JSON.stringify(metadata));
 
         // Read and send the file as binary data

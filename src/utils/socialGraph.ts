@@ -1,4 +1,4 @@
-import { NDKSubscription, NostrEvent } from '@nostr-dev-kit/ndk';
+import { NDKEvent, NDKSubscription, NostrEvent } from '@nostr-dev-kit/ndk';
 import Fuse from 'fuse.js';
 import { localState } from 'irisdb';
 import { ndk, SocialGraph } from 'irisdb-nostr';
@@ -27,11 +27,12 @@ function getFollowedUserProfiles(myPubKey: string) {
     },
     { closeOnEose: true },
   );
-  sub.on('event', (ev: NostrEvent) => {
+  sub.on('event', (ev: NDKEvent) => {
     queueMicrotask(() => {
       const lastSeen = latestProfileEvents.get(ev.pubkey) || 0;
-      if (ev.created_at > lastSeen) {
-        latestProfileEvents.set(ev.pubkey, ev.created_at);
+      const createdAt = ev.created_at || 0;
+      if (createdAt > lastSeen) {
+        latestProfileEvents.set(ev.pubkey, createdAt);
         try {
           const profile = JSON.parse(ev.content);
           const name = profile.name || profile.username;
@@ -60,11 +61,12 @@ localState.get('user/publicKey').on((publicKey?: string) => {
     });
     let latestTime = 0;
     sub?.on('event', (ev) => {
-      if (ev.created_at < latestTime) {
+      const createdAt = ev.created_at || 0;
+      if (createdAt < latestTime) {
         return;
       }
-      latestTime = ev.created_at;
-      instance.handleEvent(ev);
+      latestTime = createdAt;
+      instance.handleEvent(ev as NostrEvent);
       setTimeout(() => {
         getFollowedUserProfiles(publicKey);
       }, 500);

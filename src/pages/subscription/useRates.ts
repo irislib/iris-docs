@@ -18,8 +18,9 @@ export function useRates(symbol: string, leaveOpen = true) {
     });
 
     sub.on('event', (ev) => {
-      if (!latest || ev.created_at > latest.created_at) {
-        setLatest(ev);
+      const createdAt = ev.created_at || 0;
+      if (!latest || createdAt > latest.created_at) {
+        setLatest(ev as NostrEvent);
       }
       if (!leaveOpen) {
         sub.stop();

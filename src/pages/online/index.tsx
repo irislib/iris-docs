@@ -42,7 +42,7 @@ export default function OnlinePage() {
       unsub();
       newPool.stopPinging();
     };
-  }, [follows, myNpub, myPubKey, uuid]);
+  }, [follows, myNpub, myPubKey, uuid]); // TODO how to not reset pool on follows change?
 
   if (!myPubKey) {
     return <div>Loading...</div>;
